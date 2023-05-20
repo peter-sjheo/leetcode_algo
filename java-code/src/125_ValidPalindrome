@@ -1,0 +1,43 @@
+class Solution {
+    public boolean isPalindrome(String s) {
+        String upperCase = s.toUpperCase();
+        String filteredString = this.removeNonPrintableChar(upperCase);
+
+        StringBuilder reverseUpperCase = new StringBuilder();
+        for(int i=filteredString.length()-1; i>=0; i--) {
+            reverseUpperCase.append(filteredString.charAt(i));
+        }
+
+        System.out.printf("%s\n", filteredString);
+        System.out.printf("%s\n", reverseUpperCase);
+        if(filteredString.equals(reverseUpperCase.toString())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public String removeNonPrintableChar(String upperCase) {
+
+        char asc_a = 'A';
+        char asc_z = 'Z';
+        upperCase = upperCase.replaceAll(" ", "");
+
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i<upperCase.length(); i++) {
+            Character ch = upperCase.charAt(i);
+            //'A' < ch < 'Z' true.            
+            if('A' <= ch && ch <= 'Z') {
+                builder.append(ch);
+            }
+
+            if('0' <= ch && ch <= '9') {
+                builder.append(ch);
+            }
+        }
+
+
+        return builder.toString();
+
+    }
+}
