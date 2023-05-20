@@ -1,0 +1,51 @@
+import java.util.HashMap;
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        //anagram -> nagaram
+        HashMap<Character, Integer> s_countMap = this.generateMap(s);
+        HashMap<Character, Integer> t_countMap = this.generateMap(t);
+
+        boolean sValid = this.valid(s_countMap, t_countMap);
+        boolean tValid = this.valid(t_countMap, s_countMap);
+
+        if(sValid && tValid) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public HashMap<Character, Integer> generateMap(String str) {
+        HashMap<Character, Integer> srcMap = new HashMap<>();
+
+        for(int i=0; i <str.length(); i++) {
+            if(srcMap.containsKey(str.charAt(i))) {
+                int saved_count = srcMap.get(str.charAt(i));
+                srcMap.put(str.charAt(i), saved_count+1);
+            } else {
+                srcMap.put(str.charAt(i), 1);
+            }
+        }
+
+        return srcMap;
+    }
+
+    public boolean valid(HashMap<Character, Integer> srcMap, HashMap<Character, Integer> tgtMap) {
+
+        for (Character ch : srcMap.keySet()) {
+            Integer s_count = srcMap.get(ch);
+            if(tgtMap.get(ch) == null) {
+                return false;
+            }
+
+            Integer t_count = tgtMap.get(ch);
+            if(!s_count.equals(t_count)) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+}
