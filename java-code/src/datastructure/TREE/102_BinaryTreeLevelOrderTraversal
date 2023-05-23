@@ -1,0 +1,82 @@
+/*
+102. Binary Tree Level Order Traversal
+
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+Example 1:
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[9,20],[15,7]]
+
+Example 2:
+Input: root = [1]
+Output: [[1]]
+
+Example 3:
+Input: root = []
+Output: []
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> integerList = new ArrayList<>();
+        if(root == null) {
+            return integerList;
+        }
+
+        List<Integer> rootList = new ArrayList<>();        
+        rootList.add(root.val);
+        integerList.add(rootList);        
+        this.print(root, 2, integerList);
+
+        return integerList;
+    }
+
+    public void print(TreeNode root, int current_depth, List<List<Integer>> integerList) {
+        
+    
+        if(root == null) {
+            return;
+        }
+
+        if(root.left == null && root.right == null) {
+            return;
+        }
+        
+        if(integerList.size() < current_depth) {
+            List<Integer> tempoList = new ArrayList<>();
+            integerList.add(tempoList);
+        }
+
+        List<Integer> currentList = integerList.get(current_depth-1);
+        if(currentList == null) {
+            currentList = new ArrayList<>();
+            integerList.add(currentList);
+        }
+        
+        if(root.left != null) {            
+            currentList.add(root.left.val);
+        }
+
+        if(root.right != null) {            
+            currentList.add(root.right.val);
+        }
+                        
+        print(root.left,  current_depth+1, integerList);
+        print(root.right, current_depth+1, integerList);
+    }
+}
