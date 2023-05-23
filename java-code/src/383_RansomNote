@@ -1,0 +1,62 @@
+//383. Ransom Note
+
+/*
+
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+Each letter in magazine can only be used once in ransomNote.
+
+ 
+
+Example 1:
+Input: ransomNote = "a", magazine = "b"
+Output: false
+
+Example 2:
+Input: ransomNote = "aa", magazine = "ab"
+Output: false
+
+Example 3:
+Input: ransomNote = "aa", magazine = "aab"
+Output: true
+
+*/
+
+
+
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        
+        HashMap<Character, Integer> ransomMap = this.createHashMap(ransomNote);
+        HashMap<Character, Integer> magazineMap = this.createHashMap(magazine);
+
+        for(Character ch : ransomMap.keySet()) {
+            Integer ransomCount = ransomMap.get(ch);
+            Integer magazCount  = magazineMap.get(ch);
+            if(magazCount == null) {
+                return false;
+            }
+            
+            if(ransomCount > magazCount) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public HashMap<Character, Integer> createHashMap(String str) {
+
+        HashMap<Character, Integer> strMap = new HashMap<>();
+        for(int i=0; i<str.length(); i++) {
+            Character s = str.charAt(i);
+            if(!strMap.containsKey(s)) {
+                strMap.put(s, 1);
+            } else {
+                int count = strMap.get(s);
+                strMap.put(s, count+1);
+            }
+        }
+
+        return strMap;
+    }
+}
